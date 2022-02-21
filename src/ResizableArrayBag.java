@@ -1,6 +1,6 @@
 public class ResizableArrayBag<T> implements BagInterface<T>
 {
-    private final T[] bag;
+    private T[] bag;
     private static final int DEFAULT_CAPACITY = 25;
     private int numberOfEntries;
     private boolean integrityOK = false;

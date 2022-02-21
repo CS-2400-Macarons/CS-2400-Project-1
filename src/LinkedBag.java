@@ -1,5 +1,18 @@
+/**
+ A class of bags whose entries are stored in a chain of linked
+ nodes.
+ The bag is never full.
+ */
 public class LinkedBag<T> implements BagInterface<T>
 {
+    private Node firstNode; // Reference to first node
+    private int numberOfEntries;
+
+    public LinkedBag()
+    {
+        firstNode = null;
+        numberOfEntries = 0;
+    } // end default constructor
 
     @Override
     public int getCurrentSize() {
@@ -60,4 +73,22 @@ public class LinkedBag<T> implements BagInterface<T>
     public T[] difference(T bag) {
         return null;
     }
+
+    private class Node
+    {
+        private T data; // Entry in bag
+        private Node next; // Link to next node
+
+        private Node(T dataPortion)
+        {
+            this(dataPortion, null);
+        } // end constructor
+
+        private Node(T dataPortion, Node nextNode)
+        {
+            data = dataPortion;
+            next = nextNode;
+        } // end constructor
+
+    } // end Nod
 }

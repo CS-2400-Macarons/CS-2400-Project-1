@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ResizableArrayBag<T> implements BagInterface<T>
 {
     private T[] bag;
@@ -40,9 +42,59 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     }
 
     @Override
-    public boolean add(T newEntry) {
-        return false;
-    }
+    /** Adds a new entry to this bag.
+     * @param newEntry  The object to be added as a new entry.
+     * @return  True if the addition is successful, or false if not. */
+    public boolean add(T newEntry)
+    {
+        checkIntegrity();
+        boolean result = true;
+
+        if (isArrayFull())
+        {
+            result = false;
+        }
+        else
+        {  // Assertion: result is true here
+            bag[numberOfEntries] = newEntry;
+            numberOfEntries++;
+        } // end if
+
+        return result;
+    } // end add
+
+    // Throws an exception if this object is not initialized.
+    private void checkIntegrity()
+    {
+
+        if (!integrityOK)
+
+            throw new SecurityException("ArrayBag object is corrupt.");
+
+    } // end checkIntegrity
+
+    private boolean isArrayFull()
+    {
+        return numberOfEntries == bag.length;
+    } //end isArrayFull
+
+    // Throws an exception if the client requests a capacity that is too large.
+    private void checkCapacity(int capacity)
+    {
+        if (capacity > MAX_CAPACITY)
+        throw new IllegalStateException("Attempt to create a bag whose " +
+                "capacity exeeds allowed " +
+                "maximum of " + MAX_CAPACITY);
+    } // end checkCapacity
+
+    // Doubles the size of the array bag.
+    // Precondition: checkIntegrity has been called.
+    private void doubleCapacity()
+    {
+        int newLength = 2 * bag.length;
+        checkCapacity(newLength);
+        bag = Arrays.copyOf(bag, newLength);
+    } // end doubleCapacity
 
     @Override
     public T remove() {
@@ -73,6 +125,10 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     public T[] toArray() {
         return null;
     }
+
+    /*
+    PROJECT 1 METHODS
+     */
 
     @Override
     public T[] union(T bag) {

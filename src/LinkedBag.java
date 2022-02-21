@@ -25,9 +25,21 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public boolean add(T newEntry) {
-        return false;
-    }
+    /** Adds a new entry to this bag.
+     @param newEntry  The object to be added as a new entry
+     @return  True if the addition is successful, or false if not. */
+
+    public boolean add(T newEntry)        // OutOfMemoryError possible
+    {
+        // Add to beginning of chain:
+        Node newNode = new Node(newEntry);
+        newNode.next = firstNode; // Make new node reference rest of chain
+        // (firstNode is null if chain is empty)
+        firstNode = newNode;      // New node is at beginning of chain
+        numberOfEntries++;
+        return true;
+
+    } // end add
 
     @Override
     public T remove() {
@@ -58,6 +70,10 @@ public class LinkedBag<T> implements BagInterface<T>
     public T[] toArray() {
         return null;
     }
+
+    /*
+    PROJECT 1 METHODS
+    */
 
     @Override
     public T[] union(T bag) {
@@ -90,5 +106,5 @@ public class LinkedBag<T> implements BagInterface<T>
             next = nextNode;
         } // end constructor
 
-    } // end Nod
+    } // end Node
 }

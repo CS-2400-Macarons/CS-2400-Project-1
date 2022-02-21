@@ -1,15 +1,16 @@
 # CS-2400-Project-1
 
-- Minh Tran, Carlo Golfo, Phung Ly
+- Minh Tran (MinT-Napkin), Carlo Golfo (cgolfo), Phung Ly (pkly1219)
 
 ## Contributions
 
-- Minh Tran:
-- Carlo Golfo:
-- Phung Ly:
+- Minh Tran (MinT-Napkin):
+- Carlo Golfo (cgolfo):
+- Phung Ly (pkly1219):
 
 ## Extra Features
 - X
+
 ## Links
 
 - Video:

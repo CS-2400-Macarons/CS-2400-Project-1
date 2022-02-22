@@ -182,6 +182,10 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
+    /** Finds the difference between the first bag to the second bag.
+     * @param bag The bag to use to find the difference of the first bag.
+     * @return A newly allocated array of the difference of the two bags.
+     */
     public T[] difference(BagInterface bag) {
 
         T[] diffBag = toArray();

@@ -34,5 +34,10 @@ public interface BagInterface<T>
 
     public T[] union(T[] bag);
     public T[] intersection(T[] bag);
+
+    /** Finds the difference between the first bag to the second bag.
+     * @param bag The bag to use to find the difference of the first bag.
+     * @return A newly allocated array of the difference of the two bags.
+     */
     public T[] difference(BagInterface bag);
 } // end BagInterface

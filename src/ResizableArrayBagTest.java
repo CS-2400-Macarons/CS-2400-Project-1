@@ -3,11 +3,26 @@ public class ResizableArrayBagTest
     public static void main(String[] args)
     {
 
-        //Testing the Difference Method
+        //Testing the Difference Method (Just using this to test if my method works, will use Java unit tests later)
+        ResizableArrayBag bag1 = new ResizableArrayBag(6);
+        ResizableArrayBag bag2 = new ResizableArrayBag(3);
 
-        String[] arr1 = {"a", "b", "c", "d", "e"};
+        bag1.add("a");
+        bag1.add("a");
+        bag1.add("a");
+        bag1.add("b");
+        bag1.add("b");
+        bag1.add("c");
 
-        String[] arr2 = {"a", "b", "c", "d", "e"};
+        bag2.add("a");
+        bag2.add("a");
+        bag2.add("b");
+
+        Object[] diffBag = bag1.difference(bag2);
+
+        for (Object s : diffBag) {
+            System.out.println(s);
+        }
 
     }
 }

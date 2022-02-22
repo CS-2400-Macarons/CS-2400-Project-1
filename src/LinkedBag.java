@@ -182,8 +182,41 @@ public class LinkedBag<T> implements BagInterface<T>
     }
 
     @Override
-    public T[] difference(T[] bag) {
-        return null;
+    public T[] difference(BagInterface bag) {
+
+        T[] diffBag = toArray();
+        T[] tempBag = (T[]) bag.toArray();
+
+        int diffSize = getCurrentSize();
+        int tempSize = bag.getCurrentSize();
+
+        for(int i = 0; i < diffSize; i++){
+            for(int k = 0; k < tempSize; k++)
+            {
+                if(diffBag[i] != null && tempBag[k] != null && diffBag[i].equals(tempBag[k]))
+                {
+                    diffBag[i] = diffBag[diffSize - 1]; // Replace entry with last entry
+                    diffBag[diffSize - 1] = null;            // Remove last entry
+                    diffSize--;
+
+                    tempBag[k] = tempBag[tempSize -1];
+                    tempBag[tempSize - 1] = null;
+                    tempSize--;
+
+                    i--;
+                    k = tempSize;
+                }
+            } // end for
+        } // end for
+
+        @SuppressWarnings("unchecked")
+        T[] result = (T[]) new Object[diffSize];
+        for(int i = 0; i < diffSize; i++)
+        {
+            result[i] = diffBag[i];
+        }
+
+        return result;
     }
 
     private class Node

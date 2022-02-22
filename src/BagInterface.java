@@ -34,5 +34,5 @@ public interface BagInterface<T>
 
     public T[] union(T[] bag);
     public T[] intersection(T[] bag);
-    public T[] difference(T[] bag);
+    public T[] difference(BagInterface bag);
 } // end BagInterface

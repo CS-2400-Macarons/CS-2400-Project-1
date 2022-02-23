@@ -33,7 +33,12 @@ public interface BagInterface<T>
     public T[] toArray();
 
     public T[] union(T[] bag);
-    public T[] intersection(T[] bag);
+
+    /** Finds the similarity elements appearing in the first bag and the second bag.
+       @param bag the bag to compare with the first bag.
+       @return a new allocated array of all the similarity of the two bags
+    */
+    public T[] intersection(BagInterface bag);
 
     /** Finds the difference between the first bag to the second bag.
      * @param bag The bag to use to find the difference of the first bag.

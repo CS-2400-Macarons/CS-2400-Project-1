@@ -223,8 +223,38 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     }
 
     @Override
-    public T[] intersection(T[] bag) {
-        return null;
+    /** Finds the similarity elements appearing in the first bag and the second bag.
+       @param bag the bag to compare with the first bag.
+       @return a new allocated array of all the similarity of the two bags
+    */
+    
+    public T[] intersection(BagInterface bag) {
+        T[] sameBag = toArray();
+        T[] compareBag = (T[]) bag.toArray();
+        int sameSize = getCurrentSize();
+        int compareSize = bag.getCurrentSize();
+        T[] resultBag = (T[]) new Object[MAX_CAPACITY];
+        int j = 0;
+
+        for(int i = 0; i < sameSize; i++){
+            for(int k = 0; k < compareSize; k++)
+            {
+                if(sameBag[i] != null && compareBag[k] != null && sameBag[i].equals(compareBag[k]))
+                {
+                    resultBag[j] = sameBag[i]; //assign the same element into the result bag
+                    j++;
+                    
+                    sameBag[i] = null;     // remove the element             
+                    
+                    compareBag[k] = null;  // remove the element
+                
+                   
+                }
+            } // end for
+        } // end for
+
+        return resultBag;
+
     }
 
     @Override

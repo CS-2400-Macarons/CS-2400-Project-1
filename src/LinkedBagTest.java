@@ -1,6 +1,9 @@
+import org.junit.jupiter.api.Test;
+
 public class LinkedBagTest
 {
-    public static void main(String[] args)
+    @Test
+    public void setUp()
     {
 
         //Testing the Difference Method (Just using this to test if my method works, will use Java unit tests later)
@@ -19,13 +22,13 @@ public class LinkedBagTest
         bag2.add("a");
         bag2.add("b");
 
-//        Object[] sameBag = bag1.intersection(bag2);
-//
-//        for (int i = 0; i < sameBag.length; i++ ) {
-//            if(sameBag[i] != null){
-//            System.out.println(sameBag[i]);
-//            }
-//        }
+        Object[] sameBag = bag1.intersection(bag2);
+
+        for (int i = 0; i < sameBag.length; i++ ) {
+            if(sameBag[i] != null){
+            System.out.println(sameBag[i]);
+            }
+        }
 
         BagInterface<String> diffBag = bag1.difference(bag2);
         Object[] arr = diffBag.toArray();

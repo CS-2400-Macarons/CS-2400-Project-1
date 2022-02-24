@@ -269,7 +269,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         if(isEmpty() || bag.isEmpty())
         {
             return resultBag;
-        }
+        } // end if
 
         // Starts finding the difference of the two bags
         for (int i = 0; i < numberOfEntries; i++)
@@ -286,7 +286,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                 {
                     return resultBag; // return the bag if last entry is null
                 }
-            }
+            } // end while
 
             //Checks for duplicate entries
             if(duplicateEntrys.getCurrentSize() != 0)
@@ -303,9 +303,9 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                     dupeFound = true;
                     i++;
                 }
-                while (duplicateEntrys.contains(this.bag[i]));
+                while (duplicateEntrys.contains(this.bag[i])); // end do while
 
-            }
+            } // end if
 
             // Finds the difference of one type of entry
             T entry = this.bag[i];
@@ -317,10 +317,10 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                 {
                     resultBag.add(entry);
                 }
-            };
+            }; // end if
             duplicateEntrys.add(entry);
-        }
+        } // end for
 
         return resultBag;
-    }
+    } // end difference
 }

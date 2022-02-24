@@ -1,6 +1,9 @@
+import org.junit.jupiter.api.Test;
+
 public class ResizableArrayBagTest
 {
-    public static void main(String[] args)
+    @Test
+    public void setUp()
     {
 
         //Testing the Difference Method (Just using this to test if my method works, will use Java unit tests later)

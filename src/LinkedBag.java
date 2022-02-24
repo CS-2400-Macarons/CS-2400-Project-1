@@ -218,6 +218,7 @@ public class LinkedBag<T> implements BagInterface<T>
      * @return A newly allocated array of the difference of the two bags.
      */
     public BagInterface<T> difference(BagInterface<T> bag) {
+
         BagInterface<T> resultBag = new LinkedBag<T>();
         BagInterface<T> duplicateEntrys = new LinkedBag<T>();
 
@@ -227,7 +228,7 @@ public class LinkedBag<T> implements BagInterface<T>
         if(isEmpty() || bag.isEmpty())
         {
             return resultBag;
-        }
+        } // end if
 
         // Starts finding the difference of the two bags
         for (int i = 0; i < numberOfEntries; i++)
@@ -243,8 +244,8 @@ public class LinkedBag<T> implements BagInterface<T>
                 else
                 {
                     return resultBag; // return the bag if first entry is null
-                }
-            }
+                } // end if
+            } // end while
 
             //Checks for duplicate entries
             if(duplicateEntrys.getCurrentSize() != 0)
@@ -257,15 +258,16 @@ public class LinkedBag<T> implements BagInterface<T>
                     if (i >= (numberOfEntries - 1))
                     {
                         return resultBag;
-                    }
+                    } // end if
 
                     dupeFound = true;
                     currentNode = currentNode.getNextNode();
                     i++;
                 }
                 while (currentNode.getNextNode() != null && duplicateEntrys.contains(currentNode.getData()));
+                // end do while
 
-            }
+            } // end if
 
             // Finds the difference of one type of entry
             T entry = currentNode.getData();
@@ -277,13 +279,13 @@ public class LinkedBag<T> implements BagInterface<T>
                 {
                     resultBag.add(entry);
                 }
-            };
+            }; // end if
             duplicateEntrys.add(entry);
             currentNode = currentNode.getNextNode();
-        }
+        } // end for
 
         return resultBag;
-    }
+    } // end difference
 
     private class Node
     {

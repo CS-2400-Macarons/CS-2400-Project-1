@@ -224,10 +224,21 @@ public class LinkedBag<T> implements BagInterface<T>
 
         Node currentNode = firstNode;
 
-        // Handles case when either bag is empty
-        if(isEmpty() || bag.isEmpty())
+        // Handles case when first bag is empty
+        if(isEmpty())
         {
             return resultBag;
+        } // end if
+
+        // Handles case when second bag is empty
+        if(bag.isEmpty())
+        {
+            for(int i = 0; i < numberOfEntries; i++)
+            {
+                T entry = currentNode.getData();
+                resultBag.add(entry);
+                currentNode = currentNode.getNextNode();
+            } // end for
         } // end if
 
         // Starts finding the difference of the two bags

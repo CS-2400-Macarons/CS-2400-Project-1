@@ -265,9 +265,22 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
         BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
 
-        // Handles case when either bag is empty
-        if(isEmpty() || bag.isEmpty())
+        // Handles case when first bag is empty
+        if(isEmpty())
         {
+            // Returns empty bag
+            return resultBag;
+        } // end if
+
+        // Handles case when second bag is empty
+        if(bag.isEmpty())
+        {
+            // Returns bag with all entries in the first bag
+            for(T entry : this.bag)
+            {
+                resultBag.add(entry);
+            } // end for
+
             return resultBag;
         } // end if
 

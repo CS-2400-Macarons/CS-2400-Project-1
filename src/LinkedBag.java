@@ -217,41 +217,72 @@ public class LinkedBag<T> implements BagInterface<T>
      * @param bag The bag to use to find the difference of the first bag.
      * @return A newly allocated array of the difference of the two bags.
      */
-    public T[] difference(BagInterface bag) {
+    public BagInterface<T> difference(BagInterface<T> bag) {
+        BagInterface<T> resultBag = new LinkedBag<T>();
+        BagInterface<T> duplicateEntrys = new LinkedBag<T>();
 
-        T[] diffBag = toArray();
-        T[] tempBag = (T[]) bag.toArray();
+        Node currentNode = firstNode;
 
-        int diffSize = getCurrentSize();
-        int tempSize = bag.getCurrentSize();
-
-        for(int i = 0; i < diffSize; i++){
-            for(int k = 0; k < tempSize; k++)
-            {
-                if(diffBag[i] != null && tempBag[k] != null && diffBag[i].equals(tempBag[k]))
-                {
-                    diffBag[i] = diffBag[diffSize - 1]; // Replace entry with last entry
-                    diffBag[diffSize - 1] = null;            // Remove last entry
-                    diffSize--;
-
-                    tempBag[k] = tempBag[tempSize -1];
-                    tempBag[tempSize - 1] = null;
-                    tempSize--;
-
-                    i--;
-                    k = tempSize;
-                }
-            } // end for
-        } // end for
-
-        @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[diffSize];
-        for(int i = 0; i < diffSize; i++)
+        // Handles case when either bag is empty
+        if(isEmpty() || bag.isEmpty())
         {
-            result[i] = diffBag[i];
+            return resultBag;
         }
 
-        return result;
+        // Starts finding the difference of the two bags
+        for (int i = 0; i < numberOfEntries; i++)
+        {
+            // Skips over 'null' entries
+            while(currentNode.getData() == null)
+            {
+                if(i < numberOfEntries - 1)
+                {
+                    currentNode = currentNode.getNextNode();
+                    i++;
+                }
+                else
+                {
+                    return resultBag; // return the bag if first entry is null
+                }
+            }
+
+            //Checks for duplicate entries
+            if(duplicateEntrys.getCurrentSize() != 0)
+            {
+                boolean dupeFound = false;
+
+                do
+                {
+                    // Return bag if the rest of the entries up to the end are duplicates
+                    if (i >= (numberOfEntries - 1))
+                    {
+                        return resultBag;
+                    }
+
+                    dupeFound = true;
+                    currentNode = currentNode.getNextNode();
+                    i++;
+                }
+                while (currentNode.getNextNode() != null && duplicateEntrys.contains(currentNode.getData()));
+
+            }
+
+            // Finds the difference of one type of entry
+            T entry = currentNode.getData();
+            int diff = getFrequencyOf(entry) - bag.getFrequencyOf(entry);
+
+            if(diff > 0)
+            {
+                for(int k = 0; k < diff; k++)
+                {
+                    resultBag.add(entry);
+                }
+            };
+            duplicateEntrys.add(entry);
+            currentNode = currentNode.getNextNode();
+        }
+
+        return resultBag;
     }
 
     private class Node

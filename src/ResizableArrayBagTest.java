@@ -13,6 +13,7 @@ public class ResizableArrayBagTest
         bag1.add("b");
         bag1.add("b");
         bag1.add("c");
+        bag1.add(null);
 
         bag2.add("a");
         bag2.add("a");
@@ -26,9 +27,10 @@ public class ResizableArrayBagTest
             }
         }
 
-      Object[] diffBag = bag1.difference(bag2);
+        BagInterface<String> diffBag = bag1.difference(bag2);
+        Object[] arr = diffBag.toArray();
 
-        for (Object s : diffBag) {
+        for (Object s : arr) {
             System.out.println(s);
         }
 

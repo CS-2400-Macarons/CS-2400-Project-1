@@ -44,5 +44,5 @@ public interface BagInterface<T>
      * @param bag The bag to use to find the difference of the first bag.
      * @return A newly allocated array of the difference of the two bags.
      */
-    public T[] difference(BagInterface bag);
+    public BagInterface<T> difference(BagInterface<T> bag);
 } // end BagInterface

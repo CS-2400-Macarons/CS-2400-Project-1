@@ -1,3 +1,4 @@
+import javax.management.BadAttributeValueExpException;
 import java.util.Arrays;
 
 public class ResizableArrayBag<T> implements BagInterface<T>
@@ -48,10 +49,9 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         return numberOfEntries == 0;
     } // end isEmpty
 
-    @Override
     /** Adds a new entry to this bag.
-     * @param newEntry  The object to be added as a new entry.
-     * @return  True if the addition is successful, or false if not. */
+     @param newEntry  The object to be added as a new entry.
+     @return  True.  */
     public boolean add(T newEntry)
     {
         checkIntegrity();
@@ -59,15 +59,13 @@ public class ResizableArrayBag<T> implements BagInterface<T>
 
         if (isArrayFull())
         {
-            result = false;
-        }
-        else
-        {  // Assertion: result is true here
-            bag[numberOfEntries] = newEntry;
-            numberOfEntries++;
+            doubleCapacity();
         } // end if
 
-        return result;
+        bag[numberOfEntries] = newEntry;
+        numberOfEntries++;
+
+        return true;
     } // end add
 
     // Throws an exception if this object is not initialized.
@@ -172,8 +170,8 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     } // end clear
 
     @Override
-    /** Counts the number of times a given entry appears in this bag.​
-     @param anEntry  The entry to be counted.​
+    /** Counts the number of times a given entry appears in this bag.
+     @param anEntry  The entry to be counted.
      @return  The number of times anEntry appears in this bag. */
     public int getFrequencyOf(T anEntry)
     {
@@ -262,40 +260,67 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      * @param bag The bag to use to find the difference of the first bag.
      * @return A newly allocated array of the difference of the two bags.
      */
-    public T[] difference(BagInterface bag) {
+    public BagInterface<T> difference(BagInterface<T> bag) {
 
-        T[] diffBag = toArray();
-        T[] tempBag = (T[]) bag.toArray();
+        BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
+        BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
 
-        int diffSize = getCurrentSize();
-        int tempSize = bag.getCurrentSize();
-
-        for(int i = 0; i < diffSize; i++){
-            for(int k = 0; k < tempSize; k++)
-            {
-                if(diffBag[i] != null && tempBag[k] != null && diffBag[i].equals(tempBag[k]))
-                {
-                    diffBag[i] = diffBag[diffSize - 1]; // Replace entry with last entry
-                    diffBag[diffSize - 1] = null;            // Remove last entry
-                    diffSize--;
-
-                    tempBag[k] = tempBag[tempSize -1];
-                    tempBag[tempSize - 1] = null;
-                    tempSize--;
-
-                    i--;
-                    k = tempSize;
-                }
-            } // end for
-        } // end for
-
-        @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[diffSize];
-        for(int i = 0; i < diffSize; i++)
+        // Handles case when either bag is empty
+        if(isEmpty() || bag.isEmpty())
         {
-            result[i] = diffBag[i];
+            return resultBag;
         }
 
-        return result;
+        // Starts finding the difference of the two bags
+        for (int i = 0; i < numberOfEntries; i++)
+        {
+
+            // Skips over 'null' entries
+            while(this.bag[i] == null)
+            {
+                if(i < numberOfEntries - 1)
+                {
+                    i++;
+                }
+                else
+                {
+                    return resultBag; // return the bag if last entry is null
+                }
+            }
+
+            //Checks for duplicate entries
+            if(duplicateEntrys.getCurrentSize() != 0)
+            {
+                boolean dupeFound = false;
+
+                do
+                {
+                    // Return bag if the rest of the entries up to the end are duplicates
+                    if(i >= (numberOfEntries - 1))
+                    {
+                        return resultBag;
+                    }
+                    dupeFound = true;
+                    i++;
+                }
+                while (duplicateEntrys.contains(this.bag[i]));
+
+            }
+
+            // Finds the difference of one type of entry
+            T entry = this.bag[i];
+            int diff = getFrequencyOf(entry) - bag.getFrequencyOf(entry);
+
+            if(diff > 0)
+            {
+                for(int k = 0; k < diff; k++)
+                {
+                    resultBag.add(entry);
+                }
+            };
+            duplicateEntrys.add(entry);
+        }
+
+        return resultBag;
     }
 }

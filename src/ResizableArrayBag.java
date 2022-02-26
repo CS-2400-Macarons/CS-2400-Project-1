@@ -226,32 +226,70 @@ public class ResizableArrayBag<T> implements BagInterface<T>
        @return a new allocated array of all the similarity of the two bags
     */
     
-    public T[] intersection(BagInterface bag) {
-        T[] sameBag = toArray();
-        T[] compareBag = (T[]) bag.toArray();
-        int sameSize = getCurrentSize();
-        int compareSize = bag.getCurrentSize();
-        T[] resultBag = (T[]) new Object[MAX_CAPACITY];
-        int j = 0;
+    public BagInterface<T> intersection(BagInterface<T> bag) {    
+            
+        BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
+        BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
+        
+       // when there is a empty bag or both are empty
+       if(isEmpty() || bag.isEmpty())
+       {
+           return resultBag;
+       }
 
-        for(int i = 0; i < sameSize; i++){
-            for(int k = 0; k < compareSize; k++)
+       //Start to find the intersection
+       for (int i = 0; i < numberOfEntries; i++)
+       {
+        T entry = this.bag[i];
+        int same = 0;  
+
+        //Checks for duplicate entries
+        if(duplicateEntrys.getCurrentSize() != 0)
+        {
+            boolean dupeFound = false;
+
+            do
             {
-                if(sameBag[i] != null && compareBag[k] != null && sameBag[i].equals(compareBag[k]))
+                // Return bag if the rest of the entries up to the end are duplicates
+                if(i >= (numberOfEntries - 1))
                 {
-                    resultBag[j] = sameBag[i]; //assign the same element into the result bag
-                    j++;
-                    
-                    sameBag[i] = null;     // remove the element             
-                    
-                    compareBag[k] = null;  // remove the element
-                
-                   
+                    return resultBag;
                 }
-            } // end for
-        } // end for
+                dupeFound = true;
+                i++;
+            }
+            while (duplicateEntrys.contains(this.bag[i]));
 
-        return resultBag;
+        }
+              
+        //Check if one type of entry appearing more than one time
+        
+            if(getFrequencyOf(entry) <= bag.getFrequencyOf(entry))
+            {
+                 same = getFrequencyOf(entry);
+            }
+
+            else if (bag.getFrequencyOf(entry)< getFrequencyOf(entry))
+            {
+                 same = bag.getFrequencyOf(entry);
+            }
+
+            //Find the similarity of one type of the entry
+            if(same > 0)
+            {
+                for(int k = 0; k < same; k++)
+                {
+                    resultBag.add(entry);
+                                       
+                }         
+             
+            }
+           duplicateEntrys.add(entry);
+
+        }
+        
+
+        return resultBag;      
 
     }
 

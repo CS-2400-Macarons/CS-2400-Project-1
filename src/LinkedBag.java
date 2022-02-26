@@ -182,32 +182,66 @@ public class LinkedBag<T> implements BagInterface<T>
        @return a new allocated array of all the similarity of the two bags
     */
 
-    public T[] intersection(BagInterface bag) {
-        T[] sameBag = toArray();
-        T[] compareBag = (T[]) bag.toArray();
-        int sameSize = getCurrentSize();
-        int compareSize = bag.getCurrentSize();
+    public BagInterface<T> intersection(BagInterface<T> bag) {
+        BagInterface<T> resultBag = new LinkedBag<T>();
+        BagInterface<T> duplicateEntrys = new LinkedBag<T>();
 
-        T[] resultBag = (T[]) new Object[sameSize];
-        int j = 0;
+        Node currentNode = firstNode;
 
-        for(int i = 0; i < sameSize; i++){
-            for(int k = 0; k < compareSize; k++)
+         // when there is a empty bag or both are empty
+        if(isEmpty() || bag.isEmpty())
+        {
+            return resultBag;
+        }
+
+        //Start to find the intersection
+        for (int i = 0; i < numberOfEntries; i++)
+        {
+            //Checks for duplicate entries
+            if(duplicateEntrys.getCurrentSize() != 0)
             {
-                if(sameBag[i] != null && compareBag[k] != null && sameBag[i].equals(compareBag[k]))
-                {
-                    resultBag[j] = sameBag[i]; //assign the same element into the result bag
-                    j++;
-                    
-                    sameBag[i] = null;     // remove the element             
-                    
-                    compareBag[k] = null;  // remove the element
-                
-                   
-                }
-            } // end for
-        } // end for
+                boolean dupeFound = false;
 
+                do
+                {
+                    // Return bag if the rest of the entries up to the end are duplicates
+                    if (i >= (numberOfEntries - 1))
+                    {
+                        return resultBag;
+                    }
+
+                    dupeFound = true;
+                    currentNode = currentNode.getNextNode();
+                    i++;
+                }
+                while (duplicateEntrys.contains(currentNode.getData()));
+
+            }
+
+            // Finds the similarity of one type of entry
+            T entry = currentNode.getData();
+            int same = 0;
+            if(getFrequencyOf(entry) <= bag.getFrequencyOf(entry))
+            {
+                 same = getFrequencyOf(entry);
+
+            }
+
+            else if (bag.getFrequencyOf(entry)< getFrequencyOf(entry))
+            {
+                 same = bag.getFrequencyOf(entry);
+            }
+
+            if(same > 0)
+            {
+                for(int k = 0; k < same; k++)
+                {
+                    resultBag.add(entry);
+                }
+            }
+            duplicateEntrys.add(entry);
+            currentNode = currentNode.getNextNode();
+        }
         return resultBag;
 
     }

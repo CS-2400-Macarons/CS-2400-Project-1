@@ -1,4 +1,6 @@
-import javax.management.BadAttributeValueExpException;
+// @author Frank M. Carrano, Timothy M. Henry
+// @version 5.0
+
 import java.util.Arrays;
 
 public class ResizableArrayBag<T> implements BagInterface<T>

@@ -1,3 +1,6 @@
+// @author Frank M. Carrano, Timothy M. Henry
+// @version 5.0
+
 /**
  A class of bags whose entries are stored in a chain of linked
  nodes.

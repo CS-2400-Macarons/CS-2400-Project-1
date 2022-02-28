@@ -226,9 +226,27 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      */
 
     @Override
-    public T[] union(T[] bag) {
-        System.out.println("Hello");
-        return null;
+    public BagInterface<T> union(BagInterface<T> bag)
+    {
+        checkIntegrity();
+        T[] ar = bag.toArray();
+        BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
+        if (!isEmpty())
+        {
+            for(int i =0; i < numberOfEntries; i++)
+            {
+                resultBag.add(this.bag[i]);
+            }
+        }
+        if(!bag.isEmpty())
+        {
+            for(int i =0; i < bag.getCurrentSize(); i++)
+            {
+                resultBag.add(ar[i]);
+
+            }
+        }
+        return resultBag;
     }
 
     @Override

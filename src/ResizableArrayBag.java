@@ -233,20 +233,22 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     public BagInterface<T> union(BagInterface<T> bag)
     {
         checkIntegrity();
-        T[] ar = bag.toArray();
+        T[] clonedBag = Arrays.copyOf(this.bag, this.bag.length);
+        T[] arr = bag.toArray();
         BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
+
         if (!isEmpty())
         {
             for(int i =0; i < numberOfEntries; i++)
             {
-                resultBag.add(this.bag[i]);
+                resultBag.add(clonedBag[i]);
             }
         }
         if(!bag.isEmpty())
         {
             for(int i =0; i < bag.getCurrentSize(); i++)
             {
-                resultBag.add(ar[i]);
+                resultBag.add(arr[i]);
 
             }
         }

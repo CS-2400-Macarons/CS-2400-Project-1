@@ -181,8 +181,27 @@ public class LinkedBag<T> implements BagInterface<T>
     */
 
     @Override
-    public T[] union(T[] bag) {
-        return null;
+    public bagInterface<T> union(bagInterface<T> bag)
+    {
+        Node currentNode = firstNode;
+        T[] ar = bag.toArray();
+        BagInterface<T> resultBag = new LinkedBag<T>();
+        if (!isEmpty())
+        {
+            for(int i =0; i < numberOfEntries; i++)
+            {
+                resultBag.add(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            }
+        }
+        if(!bag.isEmpty())
+        {
+            for(int i =0; i < bag.getCurrentSize(); i++)
+            {
+                resultBag.add(ar[i]);
+            }
+        }
+        return resultBag;
     }
 
     @Override

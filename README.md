@@ -13,7 +13,7 @@
 
 ## Links
 
-- Video:
+- Video: https://www.youtube.com/watch?v=-7bu3PxlXnc
 
-- Javadoc: 
+- Javadoc: https://github.com/CS-2400-Macarons/CS-2400-Project-1/blob/main/JavaDoc/index.html 
 

@@ -105,7 +105,7 @@ public class BagDriver
         }
         System.out.println();
         /*
-        Difference Bag (Bag 2 - Bag 1): Plush, Movie Poster
+        Difference Bag (Bag 2 - Bag 1): Plush, Movie PosterR
          */
     }
 }

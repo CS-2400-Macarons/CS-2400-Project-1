@@ -220,7 +220,7 @@ public class LinkedBagTest
     @Test
     void nullAddedToBagsThrowsException()
     {
-        BagInterface<Integer> nullBag = new ResizableArrayBag<>(1);
+        BagInterface<Integer> nullBag = new LinkedBag<>();
         assertThrows(RuntimeException.class,
                 () -> {
                     nullBag.add(null);

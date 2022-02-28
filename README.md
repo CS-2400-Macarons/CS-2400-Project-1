@@ -4,12 +4,12 @@
 
 ## Contributions
 
-- Minh Tran (MinT-Napkin): Difference Method
+- Minh Tran (MinT-Napkin): Difference Method, Unit Tests
 - Carlo Golfo (cgolfo): Union Method
-- Phung Ly (pkly1219): Intersection Method
+- Phung Ly (pkly1219): Intersection Method, Big O Notation Computations
 
 ## Extra Features
-- X
+- JUnit5 (Java Unit Test Framework)
 
 ## Links
 

@@ -309,7 +309,6 @@ public class LinkedBag<T> implements BagInterface<T>
         // Starts finding the difference of the two bags
         for (int i = 0; i < numberOfEntries; i++)
         {
-
             //Checks for duplicate entries
             if(duplicateEntrys.getCurrentSize() > 0)
             {
@@ -320,7 +319,7 @@ public class LinkedBag<T> implements BagInterface<T>
                     i++;
 
                     // Return bag if the rest of the entries up to the end are duplicates
-                    if (i >= (numberOfEntries - 1) || currentNode == null)
+                    if (i >= (numberOfEntries) || currentNode == null)
                     {
                         return resultBag;
                     } // end if
@@ -331,9 +330,8 @@ public class LinkedBag<T> implements BagInterface<T>
 
             // Finds the difference of one type of entry
             T entry = currentNode.getData();
-            duplicateEntrys.add(entry);
-
             int diff = getFrequencyOf(entry) - bag.getFrequencyOf(entry);
+
             if(diff > 0)
             {
                 for(int k = 0; k < diff; k++)

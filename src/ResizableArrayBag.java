@@ -284,7 +284,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
             while (duplicateEntrys.contains(clonedBag[i]))
             {
                 // Return bag if the rest of the entries up to the end are duplicates
-                if(i >= (numberOfEntries - 1))
+                if(i >= (numberOfEntries))
                 {
                     return resultBag;
                 }
@@ -367,7 +367,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                 while (duplicateEntrys.contains(clonedBag[i]))
                 {
                     // Return bag if the rest of the entries up to the end are duplicates
-                    if(i >= (numberOfEntries - 1))
+                    if(i >= (numberOfEntries))
                     {
                         return resultBag;
                     }

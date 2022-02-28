@@ -39,13 +39,19 @@ public class LinkedBag<T> implements BagInterface<T>
     public boolean add(T newEntry)        // OutOfMemoryError possible
     {
         // Add to beginning of chain:
-        Node newNode = new Node(newEntry);
-        newNode.next = firstNode; // Make new node reference rest of chain
-        // (firstNode is null if chain is empty)
-        firstNode = newNode;      // New node is at beginning of chain
-        numberOfEntries++;
-        return true;
-
+        if(newEntry != null)
+        {
+            Node newNode = new Node(newEntry);
+            newNode.next = firstNode; // Make new node reference rest of chain
+            // (firstNode is null if chain is empty)
+            firstNode = newNode;      // New node is at beginning of chain
+            numberOfEntries++;
+            return true;
+        }
+        else
+        {
+            throw new RuntimeException("Cannot add null entry to bag");
+        }
     } // end add
 
     @Override
@@ -203,9 +209,8 @@ public class LinkedBag<T> implements BagInterface<T>
             //Checks for duplicate entries
             if(duplicateEntrys.getCurrentSize() != 0)
             {
-                boolean dupeFound = false;
 
-                do
+                while (duplicateEntrys.contains(currentNode.getData()))
                 {
                     // Return bag if the rest of the entries up to the end are duplicates
                     if (i >= (numberOfEntries - 1))
@@ -213,11 +218,9 @@ public class LinkedBag<T> implements BagInterface<T>
                         return resultBag;
                     }
 
-                    dupeFound = true;
                     currentNode = currentNode.getNextNode();
                     i++;
                 }
-                while (duplicateEntrys.contains(currentNode.getData()));
 
             }
 
@@ -276,51 +279,38 @@ public class LinkedBag<T> implements BagInterface<T>
                 resultBag.add(entry);
                 currentNode = currentNode.getNextNode();
             } // end for
+
+            return resultBag;
         } // end if
 
         // Starts finding the difference of the two bags
         for (int i = 0; i < numberOfEntries; i++)
         {
-            // Skips over 'null' entries
-            while(currentNode.getData() == null)
+
+            //Checks for duplicate entries
+            if(duplicateEntrys.getCurrentSize() > 0)
             {
-                if(i < numberOfEntries - 1)
+
+                while (duplicateEntrys.contains(currentNode.getData()))
                 {
                     currentNode = currentNode.getNextNode();
                     i++;
-                }
-                else
-                {
-                    return resultBag; // return the bag if first entry is null
-                } // end if
-            } // end while
 
-            //Checks for duplicate entries
-            if(duplicateEntrys.getCurrentSize() != 0)
-            {
-                boolean dupeFound = false;
-
-                do
-                {
                     // Return bag if the rest of the entries up to the end are duplicates
-                    if (i >= (numberOfEntries - 1))
+                    if (i >= (numberOfEntries - 1) || currentNode == null)
                     {
                         return resultBag;
                     } // end if
 
-                    dupeFound = true;
-                    currentNode = currentNode.getNextNode();
-                    i++;
-                }
-                while (currentNode.getNextNode() != null && duplicateEntrys.contains(currentNode.getData()));
-                // end do while
+                } // end while
 
             } // end if
 
             // Finds the difference of one type of entry
             T entry = currentNode.getData();
-            int diff = getFrequencyOf(entry) - bag.getFrequencyOf(entry);
+            duplicateEntrys.add(entry);
 
+            int diff = getFrequencyOf(entry) - bag.getFrequencyOf(entry);
             if(diff > 0)
             {
                 for(int k = 0; k < diff; k++)
@@ -328,12 +318,15 @@ public class LinkedBag<T> implements BagInterface<T>
                     resultBag.add(entry);
                 }
             }; // end if
-            duplicateEntrys.add(entry);
+
             currentNode = currentNode.getNextNode();
+            duplicateEntrys.add(entry);
         } // end for
 
         return resultBag;
     } // end difference
+
+
 
     private class Node
     {

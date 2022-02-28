@@ -59,13 +59,20 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         checkIntegrity();
         boolean result = true;
 
-        if (isArrayFull())
+        if(newEntry != null)
         {
-            doubleCapacity();
-        } // end if
+            if (isArrayFull())
+            {
+                doubleCapacity();
+            } // end if
 
-        bag[numberOfEntries] = newEntry;
-        numberOfEntries++;
+            bag[numberOfEntries] = newEntry;
+            numberOfEntries++;
+        }
+        else
+        {
+            throw new RuntimeException("Cannot add null entry to bag.");
+        }
 
         return true;
     } // end add
@@ -228,8 +235,9 @@ public class ResizableArrayBag<T> implements BagInterface<T>
        @return a new allocated array of all the similarity of the two bags
     */
     
-    public BagInterface<T> intersection(BagInterface<T> bag) {    
-            
+    public BagInterface<T> intersection(BagInterface<T> bag) {
+
+        checkIntegrity();
         BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
         BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
         
@@ -242,27 +250,24 @@ public class ResizableArrayBag<T> implements BagInterface<T>
        //Start to find the intersection
        for (int i = 0; i < numberOfEntries; i++)
        {
-        T entry = this.bag[i];
-        int same = 0;  
-
         //Checks for duplicate entries
         if(duplicateEntrys.getCurrentSize() != 0)
         {
-            boolean dupeFound = false;
-
-            do
+            while (duplicateEntrys.contains(this.bag[i]))
             {
                 // Return bag if the rest of the entries up to the end are duplicates
                 if(i >= (numberOfEntries - 1))
                 {
                     return resultBag;
                 }
-                dupeFound = true;
                 i++;
             }
-            while (duplicateEntrys.contains(this.bag[i]));
 
         }
+
+           T entry = this.bag[i];
+           int same = 0;
+           duplicateEntrys.add(entry);
               
         //Check if one type of entry appearing more than one time
         
@@ -271,22 +276,19 @@ public class ResizableArrayBag<T> implements BagInterface<T>
                  same = getFrequencyOf(entry);
             }
 
-            else if (bag.getFrequencyOf(entry)< getFrequencyOf(entry))
+            else if (bag.getFrequencyOf(entry) < getFrequencyOf(entry))
             {
                  same = bag.getFrequencyOf(entry);
             }
 
             //Find the similarity of one type of the entry
-            if(same > 0)
-            {
-                for(int k = 0; k < same; k++)
-                {
+            if(same > 0) {
+                for (int k = 0; k < same; k++) {
                     resultBag.add(entry);
-                                       
-                }         
-             
+
+                }
+
             }
-           duplicateEntrys.add(entry);
 
         }
         
@@ -302,6 +304,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      */
     public BagInterface<T> difference(BagInterface<T> bag) {
 
+        checkIntegrity();
         BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
         BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
 
@@ -316,9 +319,9 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         if(bag.isEmpty())
         {
             // Returns bag with all entries in the first bag
-            for(T entry : this.bag)
+            for(int i = 0; i < numberOfEntries; i++)
             {
-                resultBag.add(entry);
+                resultBag.add(this.bag[i]);
             } // end for
 
             return resultBag;
@@ -328,35 +331,18 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         for (int i = 0; i < numberOfEntries; i++)
         {
 
-            // Skips over 'null' entries
-            while(this.bag[i] == null)
-            {
-                if(i < numberOfEntries - 1)
-                {
-                    i++;
-                }
-                else
-                {
-                    return resultBag; // return the bag if last entry is null
-                }
-            } // end while
-
             //Checks for duplicate entries
             if(duplicateEntrys.getCurrentSize() != 0)
             {
-                boolean dupeFound = false;
-
-                do
+                while (duplicateEntrys.contains(this.bag[i]))
                 {
                     // Return bag if the rest of the entries up to the end are duplicates
                     if(i >= (numberOfEntries - 1))
                     {
                         return resultBag;
                     }
-                    dupeFound = true;
                     i++;
-                }
-                while (duplicateEntrys.contains(this.bag[i])); // end do while
+                } // end do while
 
             } // end if
 

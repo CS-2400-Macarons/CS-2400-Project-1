@@ -226,6 +226,10 @@ public class ResizableArrayBag<T> implements BagInterface<T>
      */
 
     @Override
+    /** Takes all the entries from both bags and puts them into a new bag.
+     * @param bag the second bag to add all entries to the first bag
+     * @return A newly allocated array of the difference of the two bags
+     */
     public BagInterface<T> union(BagInterface<T> bag)
     {
         checkIntegrity();

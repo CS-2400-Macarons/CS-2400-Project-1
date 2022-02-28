@@ -14,7 +14,7 @@ public class LinkedBagTest
         BagInterface<Integer> bag2 = new LinkedBag<>();
         BagInterface<Integer> bag3 = new LinkedBag<>();
 
-
+        assertArrayEquals(bag3.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(bag3.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(bag3.toArray(), bag1.difference(bag2).toArray());
     }
@@ -43,6 +43,7 @@ public class LinkedBagTest
         filledBagResult.add(1);
         filledBagResult.add(1);
 
+        assertArrayEquals(filledBagResult.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(emptyBagResult.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(filledBagResult.toArray(), bag1.difference(bag2).toArray());
         assertArrayEquals(emptyBagResult.toArray(), bag2.difference(bag1).toArray());
@@ -74,15 +75,15 @@ public class LinkedBagTest
         bag2.add(4);
 
         // Union: 1 1 2 2 3 1 2 2 2 4
-        unionBag.add(4);
-        unionBag.add(2);
-        unionBag.add(2);
-        unionBag.add(2);
-        unionBag.add(1);
         unionBag.add(3);
         unionBag.add(2);
         unionBag.add(2);
         unionBag.add(1);
+        unionBag.add(1);
+        unionBag.add(4);
+        unionBag.add(2);
+        unionBag.add(2);
+        unionBag.add(2);
         unionBag.add(1);
 
         // Intersection: 1 2 2
@@ -98,6 +99,7 @@ public class LinkedBagTest
         diffBag2.add(4);
         diffBag2.add(2);
 
+        assertArrayEquals(unionBag.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag2.intersection(bag1).toArray());
         assertArrayEquals(diffBag1.toArray(), bag1.difference(bag2).toArray());
@@ -128,13 +130,13 @@ public class LinkedBagTest
         bag2.add(4);
 
         // Union: 1 1 2 2 3 1 2 4
-        unionBag.add(4);
-        unionBag.add(2);
-        unionBag.add(1);
         unionBag.add(3);
         unionBag.add(2);
         unionBag.add(2);
         unionBag.add(1);
+        unionBag.add(1);
+        unionBag.add(4);
+        unionBag.add(2);
         unionBag.add(1);
 
         // Intersection: 1 2
@@ -149,6 +151,7 @@ public class LinkedBagTest
         // Difference (Bag2 - Bag1): 4
         diffBag2.add(4);
 
+        assertArrayEquals(unionBag.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag2.intersection(bag1).toArray());
         assertArrayEquals(diffBag1.toArray(), bag1.difference(bag2).toArray());
@@ -181,17 +184,16 @@ public class LinkedBagTest
         bag2.add(10);
 
         // Union: 1 2 3 4 5 6 7 8 9 10
-        unionBag.add(10);
-        unionBag.add(9);
-        unionBag.add(8);
-        unionBag.add(7);
-        unionBag.add(6);
         unionBag.add(5);
         unionBag.add(4);
         unionBag.add(3);
         unionBag.add(2);
         unionBag.add(1);
-
+        unionBag.add(10);
+        unionBag.add(9);
+        unionBag.add(8);
+        unionBag.add(7);
+        unionBag.add(6);
         // Intersection: EMPTY
 
         // Difference (Bag1 - Bag2):
@@ -208,6 +210,7 @@ public class LinkedBagTest
         diffBag2.add(7);
         diffBag2.add(6);
 
+        assertArrayEquals(unionBag.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag2.intersection(bag1).toArray());
         assertArrayEquals(diffBag1.toArray(), bag1.difference(bag2).toArray());

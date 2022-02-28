@@ -11,6 +11,7 @@ public class ResizableArrayBagTest
         BagInterface<Integer> bag2 = new ResizableArrayBag<>();
         BagInterface<Integer> bag3 = new ResizableArrayBag<>();
 
+        assertArrayEquals(bag3.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(bag3.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(bag3.toArray(), bag1.difference(bag2).toArray());
     }
@@ -39,6 +40,7 @@ public class ResizableArrayBagTest
         filledBagResult.add(2);
         filledBagResult.add(3);
 
+        assertArrayEquals(filledBagResult.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(emptyBagResult.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(filledBagResult.toArray(), bag1.difference(bag2).toArray());
         assertArrayEquals(emptyBagResult.toArray(), bag2.difference(bag1).toArray());
@@ -94,6 +96,7 @@ public class ResizableArrayBagTest
         diffBag2.add(2);
         diffBag2.add(4);
 
+        assertArrayEquals(unionBag.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag2.intersection(bag1).toArray());
         assertArrayEquals(diffBag1.toArray(), bag1.difference(bag2).toArray());
@@ -145,6 +148,7 @@ public class ResizableArrayBagTest
         // Difference (Bag2 - Bag1): 4
         diffBag2.add(4);
 
+        assertArrayEquals(unionBag.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag2.intersection(bag1).toArray());
         assertArrayEquals(diffBag1.toArray(), bag1.difference(bag2).toArray());
@@ -204,6 +208,7 @@ public class ResizableArrayBagTest
         diffBag2.add(9);
         diffBag2.add(10);
 
+        assertArrayEquals(unionBag.toArray(), bag1.union(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(sameBag.toArray(), bag2.intersection(bag1).toArray());
         assertArrayEquals(diffBag1.toArray(), bag1.difference(bag2).toArray());

@@ -227,6 +227,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
 
     @Override
     public T[] union(T[] bag) {
+        System.out.println("Hello");
         return null;
     }
 

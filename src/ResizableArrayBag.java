@@ -1,6 +1,7 @@
 // @author Frank M. Carrano, Timothy M. Henry
 // @version 5.0
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class ResizableArrayBag<T> implements BagInterface<T>
@@ -238,6 +239,8 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     public BagInterface<T> intersection(BagInterface<T> bag) {
 
         checkIntegrity();
+        T[] clonedBag = Arrays.copyOf(this.bag, this.bag.length);
+
         BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
         BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
         
@@ -253,7 +256,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
         //Checks for duplicate entries
         if(duplicateEntrys.getCurrentSize() != 0)
         {
-            while (duplicateEntrys.contains(this.bag[i]))
+            while (duplicateEntrys.contains(clonedBag[i]))
             {
                 // Return bag if the rest of the entries up to the end are duplicates
                 if(i >= (numberOfEntries - 1))
@@ -265,7 +268,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
 
         }
 
-           T entry = this.bag[i];
+           T entry = clonedBag[i];
            int same = 0;
            duplicateEntrys.add(entry);
               
@@ -305,6 +308,8 @@ public class ResizableArrayBag<T> implements BagInterface<T>
     public BagInterface<T> difference(BagInterface<T> bag) {
 
         checkIntegrity();
+        T[] clonedBag = Arrays.copyOf(this.bag, this.bag.length);
+
         BagInterface<T> resultBag = new ResizableArrayBag<T>(MAX_CAPACITY);
         BagInterface<T> duplicateEntrys = new ResizableArrayBag<T>(MAX_CAPACITY);
 
@@ -321,7 +326,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
             // Returns bag with all entries in the first bag
             for(int i = 0; i < numberOfEntries; i++)
             {
-                resultBag.add(this.bag[i]);
+                resultBag.add(clonedBag[i]);
             } // end for
 
             return resultBag;
@@ -334,7 +339,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
             //Checks for duplicate entries
             if(duplicateEntrys.getCurrentSize() != 0)
             {
-                while (duplicateEntrys.contains(this.bag[i]))
+                while (duplicateEntrys.contains(clonedBag[i]))
                 {
                     // Return bag if the rest of the entries up to the end are duplicates
                     if(i >= (numberOfEntries - 1))
@@ -347,7 +352,7 @@ public class ResizableArrayBag<T> implements BagInterface<T>
             } // end if
 
             // Finds the difference of one type of entry
-            T entry = this.bag[i];
+            T entry = clonedBag[i];
             int diff = getFrequencyOf(entry) - bag.getFrequencyOf(entry);
 
             if(diff > 0)

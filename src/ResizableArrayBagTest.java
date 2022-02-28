@@ -11,7 +11,6 @@ public class ResizableArrayBagTest
         BagInterface<Integer> bag2 = new ResizableArrayBag<>();
         BagInterface<Integer> bag3 = new ResizableArrayBag<>();
 
-
         assertArrayEquals(bag3.toArray(), bag1.intersection(bag2).toArray());
         assertArrayEquals(bag3.toArray(), bag1.difference(bag2).toArray());
     }
